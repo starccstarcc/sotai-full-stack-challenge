@@ -25,7 +25,9 @@ SECRET_KEY = "django-insecure-$t3i#@0@(z)904_s#l#_f8blcjlxnix%!s4)06rh&bl76++*##
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "*"
+]
 
 
 # Application definition
@@ -38,8 +40,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    'rest_framework.authtoken',
     "corsheaders",
-    "django_server.api"
+    "django_server.api",
+    'django_server.authapp'
 ]
 
 MIDDLEWARE = [
@@ -133,5 +137,16 @@ STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
