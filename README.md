@@ -53,15 +53,31 @@ python manage.py runserver
 ## Please Provide A Write Up For Your Work
 
 How many hours in total did you spend working on the challenge? What was your time breakdown?
+I spent 11 hours on this challenge.
+For me, it took a lot of time to implement authentication on both the frontend and backend.
 
 Anything we should know about your implementation? Libraries we need to install for it to work? Commands we need to run?
+I implemented all the requirements.
+Just use the command that you mentioned to me.
 
-What features did you add? How do we use these features?
+What features did you add? How do we use these features?'
+I implement all the required features and csv read feature.
+To do this, you need to login and click the Get Data button.
 
 Can you walk us through your thought process for implementing this challenge? How did you approach solving it? Where did you start?
+First, I implemented apis for read csv from file and getData by query from DB.
+Secod, I implemented Chart view on Frontend.
+Third, that I implmented Authentication both in frontend and backend.
 
 What was the most difficult part of the challenge?
+Nothing special.
 
 What do you like about your implementation?
+First, I want to implment notification.
+Second, I want to implement csv file upload and big file upload feature.
+Third, I want to add test case for it and make the app dockerizable.
 
 If you had more time, what would you do next? What would you change? What would you improve?
+I'm going to implement csv file upload feature and notification.
+First I have to add test cases.
+Second I have to make this app as dockerizable.

@@ -27,7 +27,7 @@ class CpuHoursViewSet(APIView):
                 'cpu_hours': j.cpu_hours,
                 'logged_date': datetime(int(j.year), int(j.month), int(j.day)).date()
             })
-            if(i > 0 and i % 1000 == 0 or i == len(csvData) - 1):
+            if(i > 0 and i % 100 == 0 or i == len(csvData) - 1):
                 serializer = CPUHoursSerializer(data=temp, many=True)
                 if serializer.is_valid(raise_exception=True):
                     try:
@@ -42,15 +42,17 @@ class CpuHoursViewSet(APIView):
         from_date = request.GET.get('from')
         to_date = request.GET.get('to')
 
+        print(view_type, from_date, to_date)
+
         if view_type == 'Yearly':
-            queryset = CPUHours.objects.filter(date__range=[from_date, to_date]).annotate(period=ExtractYear(
-                'date')).values('period').annotate(count=models.Count('id')).values('period', 'count')
+            queryset = CPUHours.objects.filter(logged_date__range=[from_date, to_date]).annotate(year=ExtractYear(
+                'logged_date')).values('year').annotate(hours=models.Sum('cpu_hours')).values('year', 'hours')
         elif view_type == 'Monthly':
-            queryset = CPUHours.objects.filter(date__range=[from_date, to_date]).annotate(period=ExtractMonth(
-                'date')).values('period').annotate(count=models.Count('id')).values('period', 'count')
+            queryset = CPUHours.objects.filter(logged_date__range=[from_date, to_date]).annotate(year=ExtractYear(
+                'logged_date')).values('year').annotate(month=ExtractMonth(
+                'logged_date')).values('year', 'month').annotate(hours=models.Sum('cpu_hours')).values('year', 'month', 'hours')
         elif view_type == 'Daily':
-            queryset = CPUHours.objects.filter(date__range=[from_date, to_date]).annotate(period=ExtractDay(
-                'date')).values('period').annotate(count=models.Count('id')).values('period', 'count')
+            queryset = CPUHours.objects.filter(logged_date__range=[from_date, to_date]).values()
         else:
             raise ValueError('Invalid view type')
 

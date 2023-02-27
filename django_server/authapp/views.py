@@ -6,8 +6,7 @@ from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from .serializers import UserSerializer
 
-
-class UserRegistrationView(APIView):
+class UserSignupView(APIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
@@ -15,8 +14,18 @@ class UserRegistrationView(APIView):
         if serializer.is_valid():
             user = serializer.save()
             if user:
-                return Response(serializer.data, status=201)
+                token, created =Token.objects.get_or_create(user=user)
+                return Response({
+                    'user': serializer.data,
+                    'token': token.key
+                    }, 
+                    status=201)
         return Response(serializer.errors, status=400)
+
+class ApiAuthLogin(APIView):
+
+    def get(self, request):
+        return Response({"username":str(request.user.username)})
 
 
 class MyObtainAuthToken(ObtainAuthToken):
