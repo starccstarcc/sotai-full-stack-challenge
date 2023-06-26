@@ -81,3 +81,5 @@ If you had more time, what would you do next? What would you change? What would 
 I'm going to implement csv file upload feature and notification.
 First I have to add test cases.
 Second I have to make this app as dockerizable.
+
+What should be the most challeng thing to solve this test?
